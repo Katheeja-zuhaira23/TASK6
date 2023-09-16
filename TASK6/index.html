@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAP,REDUCE AND FILTER</title>
+    <!-- Get all the countries from Asia continent /region using Filter function
+    Get all the countries with a population of less than 2 lakhs using Filter function
+    Print the following details name, capital, flag using forEach function
+    Print the total population of countries using reduce function
+    Print the country which uses US Dollars as currency.
+     -->
+</head>
+
+<body>
+    <script>
+        const request = new XMLHttpRequest();
+        request.open("GET", "https://restcountries.com/v3.1/all");
+        request.send();
+        request.onload = function () {
+
+            const data = JSON.parse(request.response)
+            console.log(data);
+
+            // a. FILTERING ALL THE COUNTRIES FROM ASIA
+            const region = data.filter((elem) => elem.region === "Asia")
+            console.log(region);
+
+            // b. FILTERING ALL COUNTRIES WITH POPULATION LESS THAN 2 LAKHS
+
+            const filteredByPopulation = data.filter((elem) => elem.population < 200000)
+            console.log(filteredByPopulation);
+
+            // c. PRINT NAME, CAPITAL, FLAG USING FOREACH()
+
+            const details = data.forEach(element => {
+                console.log("NAME:", element.name, "CAPITAL:", element.capital, "FLAG:", element.flag);
+            });
+
+            // d. PRINT TOTAL POPULATION USING REDUCE()
+
+            const totalPopulation = data.reduce((acc, elem) => acc + elem.population, 0)
+            console.log(totalPopulation)
+
+            // e. PRINT COUNTRIES USES US DOLLARS
+
+            const USD = data.filter((elem)=>elem.currencies && elem.currencies.USD)
+            const countries = USD.map((elem)=>elem.name.common)
+            console.log(countries)
+
+        }
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
